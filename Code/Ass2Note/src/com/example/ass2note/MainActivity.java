@@ -1,5 +1,10 @@
 package com.example.ass2note;
 
+import com.example.ass2note.notepad.Notepad;
+import com.example.ass2note.notepad.NotesDbAdapter;
+
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +16,9 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.noteblock_activity);
+      //  startNoteblock();
+        
         // solveig was here!!!!!!!
     }
     		//hei
@@ -22,5 +29,8 @@ public class MainActivity extends Activity {
         return true;
     }
     
-   
+   public void startNoteblock(){
+	   Intent intent = new Intent (this, Notepad.class);
+       startActivity(intent);
+   }
 }
