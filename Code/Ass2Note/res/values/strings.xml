@@ -12,8 +12,9 @@
 	<string name="body">Body</string>
 	<string name="confirm">Confirm</string> 
 	<string name="edit_note">Edit Note</string>
-	<string name="time">Date and Time</string>
 	<string name="position">Position</string>
 	<string name="remindInfo">I wish to be reminded of this note by</string>
+	<string name="time">Time </string>
+	<string name="date">Date </string>
 		
 </resources>

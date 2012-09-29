@@ -16,7 +16,12 @@
 
 package com.example.ass2note.notepad;
 
+
 import com.example.ass2note.R;
+import com.example.ass2note.R.id;
+import com.example.ass2note.R.layout;
+import com.example.ass2note.R.string;
+
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -51,7 +56,8 @@ public class Notepad extends ListActivity {
         fillData();
         registerForContextMenu(getListView());
         onButtonClick();
-       
+        
+      
     }
 
     private void fillData() {
