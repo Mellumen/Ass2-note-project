@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ass2Note</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Instillinger</string>
+    <string name="no_notes">Ingen Notater Enda</string>
+    <string name="menu_insert">Legg til Notat</string>
+    <string name="menu_delete">Slett Notat</string>
+	<string name="title">Title</string>
+	<string name="body">Notat</string>
+	<string name="confirm">Ok</string> 
+	<string name="edit_note">Endre Notat</string>
+	<string name="position">Position</string>
+	<string name="time">Tid </string>
+	<string name="date">Dato </string>
+	<string name="new_button">Ny </string>	
+</resources>

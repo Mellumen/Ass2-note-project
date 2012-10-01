@@ -48,7 +48,6 @@ public class NoteEdit extends Activity  {
     private EditText mTitleText;
     private EditText mBodyText;
   
-   
   
     private Long mRowId;
     private NotesDbAdapter mDbHelper;
@@ -128,7 +127,6 @@ private void updateTime(int h, int m){
 				new DatePickerDialog(NoteEdit.this, d, myCalendar
 						.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 						myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-				
 			}
 		});
 				// ON click CONFIRM
