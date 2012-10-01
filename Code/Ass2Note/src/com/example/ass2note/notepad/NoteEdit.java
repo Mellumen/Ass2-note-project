@@ -18,13 +18,7 @@ package com.example.ass2note.notepad;
 
 
 
-import java.text.DateFormat;
 import java.util.Calendar;
-
-import com.example.ass2note.R;
-import com.example.ass2note.R.id;
-import com.example.ass2note.R.layout;
-import com.example.ass2note.R.string;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -32,14 +26,15 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.example.ass2note.R;
+import com.example.ass2note.location.GoogleMapsActivity;
 
 public class NoteEdit extends Activity  {
 	
@@ -101,6 +96,7 @@ private void updateTime(int h, int m){
         
     	Button datebutton = (Button) findViewById(R.id.dateButton);
     	Button timebutton = (Button) findViewById(R.id.timeButton);
+    	Button positionbutton = (Button) findViewById(R.id.positionButton);
         Button confirmButton = (Button) findViewById(R.id.confirm);
        
         
@@ -131,16 +127,28 @@ private void updateTime(int h, int m){
 				
 			}
 		});
-        confirmButton.setOnClickListener(new View.OnClickListener() {
+	
+	positionbutton.setOnClickListener(new View.OnClickListener() {
+		public void onClick(View v) {
+			startGoogleMapsActivity();
+		}
+	});
+	
+    confirmButton.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View view) {
-                setResult(RESULT_OK);
-                finish();
-            }
+        public void onClick(View view) {
+            setResult(RESULT_OK);
+            finish();
+        }
 
-        });
+    });
         
    
+    }
+    
+    public void startGoogleMapsActivity(){
+    	Intent il = new Intent(NoteEdit.this, GoogleMapsActivity.class);
+    	startActivity(il);
     }
 
     private void populateFields() {
@@ -193,6 +201,9 @@ private void updateTime(int h, int m){
         }
     }
    
-    
+    public void startGoogleMaps(View view){
+    	Intent i = new Intent(this, GoogleMapsActivity.class);
+    	startActivity(i);
+    }
 
 }
