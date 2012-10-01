@@ -50,7 +50,7 @@ public class NotesDbAdapter {
 
     /**
      * Database creation sql statement
-     */
+     */	//String, String ,String, String, String
     private static final String DATABASE_CREATE =
         "create table notes (_id integer primary key autoincrement, "
         + "title text not null, body text not null, day text not null," 
@@ -122,7 +122,7 @@ public class NotesDbAdapter {
      * @param title the title of the note
      * @param body the body of the note
      * @return rowId or -1 if failed
-     */
+     */		// Puts the intial values into the database
     public long createNote(String title, String body, String day, String time) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, title);
@@ -185,7 +185,7 @@ public class NotesDbAdapter {
      * @param title value to set note title to
      * @param body value to set note body to
      * @return true if the note was successfully updated, false otherwise
-     */
+     */				// Updates the note with the values
     public boolean updateNote(long rowId, String title, String body, String day, String time) {
         ContentValues args = new ContentValues();
         args.put(KEY_TITLE, title);

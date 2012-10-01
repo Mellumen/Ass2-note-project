@@ -43,7 +43,6 @@ public class NoteEdit extends Activity  {
     private EditText mTitleText;
     private EditText mBodyText;
   
-   
   
     private Long mRowId;
     private NotesDbAdapter mDbHelper;
@@ -109,7 +108,7 @@ private void updateTime(int h, int m){
 		}
 
 		populateFields();
-		
+		// on clik Time
 	timebutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				new TimePickerDialog(NoteEdit.this, t, myCalendar
@@ -118,15 +117,15 @@ private void updateTime(int h, int m){
 				
 			}
 		});
-		
+		// ON click DATE
 	datebutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				new DatePickerDialog(NoteEdit.this, d, myCalendar
 						.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 						myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-				
 			}
 		});
+<<<<<<< HEAD
 	
 	positionbutton.setOnClickListener(new View.OnClickListener() {
 		public void onClick(View v) {
@@ -135,6 +134,10 @@ private void updateTime(int h, int m){
 	});
 	
     confirmButton.setOnClickListener(new View.OnClickListener() {
+=======
+				// ON click CONFIRM
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+>>>>>>> 4b07c4a1bcdb9c8cc1d83888ec929a8d5ca8b2d3
 
         public void onClick(View view) {
             setResult(RESULT_OK);
@@ -145,12 +148,16 @@ private void updateTime(int h, int m){
         
    
     }
+<<<<<<< HEAD
     
     public void startGoogleMapsActivity(){
     	Intent il = new Intent(NoteEdit.this, GoogleMapsActivity.class);
     	startActivity(il);
     }
 
+=======
+    			// Gets the values from the database
+>>>>>>> 4b07c4a1bcdb9c8cc1d83888ec929a8d5ca8b2d3
     private void populateFields() {
         if (mRowId != null) {
             Cursor note = mDbHelper.fetchNote(mRowId);
@@ -184,7 +191,7 @@ private void updateTime(int h, int m){
         super.onResume();
         populateFields();
     }
-
+    			// Saves the values to the database
     private void saveState() {
         String title = mTitleText.getText().toString();
         String body = mBodyText.getText().toString();
