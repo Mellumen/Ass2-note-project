@@ -16,5 +16,5 @@
 	<string name="remindInfo">I wish to be reminded of this note by</string>
 	<string name="time">Time </string>
 	<string name="date">Date </string>
-		
+	<string name="new_button">New </string>	
 </resources>
