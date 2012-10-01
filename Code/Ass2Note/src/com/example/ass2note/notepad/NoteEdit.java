@@ -113,7 +113,7 @@ private void updateTime(int h, int m){
 		}
 
 		populateFields();
-		
+		// on clik Time
 	timebutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				new TimePickerDialog(NoteEdit.this, t, myCalendar
@@ -122,7 +122,7 @@ private void updateTime(int h, int m){
 				
 			}
 		});
-		
+		// ON click DATE
 	datebutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				new DatePickerDialog(NoteEdit.this, d, myCalendar
@@ -131,6 +131,7 @@ private void updateTime(int h, int m){
 				
 			}
 		});
+				// ON click CONFIRM
         confirmButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -142,7 +143,7 @@ private void updateTime(int h, int m){
         
    
     }
-
+    			// Gets the values from the database
     private void populateFields() {
         if (mRowId != null) {
             Cursor note = mDbHelper.fetchNote(mRowId);
@@ -176,7 +177,7 @@ private void updateTime(int h, int m){
         super.onResume();
         populateFields();
     }
-
+    			// Saves the values to the database
     private void saveState() {
         String title = mTitleText.getText().toString();
         String body = mBodyText.getText().toString();
