@@ -2,9 +2,11 @@ package com.example.ass2note.location;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 import com.example.ass2note.R;
 import com.google.android.maps.GeoPoint;
@@ -14,6 +16,7 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 public class GoogleMapsActivity extends MapActivity {
+	static final int MAPSINTENT_ID = 0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,19 @@ public class GoogleMapsActivity extends MapActivity {
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
+	}
+	
+	public void cancelMaps(View view){
+		Intent i = new Intent();
+		setResult(RESULT_CANCELED, i);
+		finish();
+	}
+	
+	public void confirmMaps(View view){
+		Intent i = new Intent();
+		i.putExtra("test", "the testing string");
+		setResult(RESULT_OK, i);
+		finish();
 	}
 	
 	

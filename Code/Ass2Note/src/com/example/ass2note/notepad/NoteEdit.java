@@ -37,6 +37,7 @@ import com.example.ass2note.R;
 import com.example.ass2note.location.GoogleMapsActivity;
 
 public class NoteEdit extends Activity  {
+	static final int MAPSINTENT_ID = 0;
 	
 	private TextView mydateview;
 	private TextView mytimeview;
@@ -125,7 +126,6 @@ private void updateTime(int h, int m){
 						myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 			}
 		});
-<<<<<<< HEAD
 	
 	positionbutton.setOnClickListener(new View.OnClickListener() {
 		public void onClick(View v) {
@@ -134,11 +134,7 @@ private void updateTime(int h, int m){
 	});
 	
     confirmButton.setOnClickListener(new View.OnClickListener() {
-=======
 				// ON click CONFIRM
-        confirmButton.setOnClickListener(new View.OnClickListener() {
->>>>>>> 4b07c4a1bcdb9c8cc1d83888ec929a8d5ca8b2d3
-
         public void onClick(View view) {
             setResult(RESULT_OK);
             finish();
@@ -148,16 +144,13 @@ private void updateTime(int h, int m){
         
    
     }
-<<<<<<< HEAD
     
     public void startGoogleMapsActivity(){
     	Intent il = new Intent(NoteEdit.this, GoogleMapsActivity.class);
     	startActivity(il);
     }
-
-=======
-    			// Gets the values from the database
->>>>>>> 4b07c4a1bcdb9c8cc1d83888ec929a8d5ca8b2d3
+    
+    // Gets the values from the database
     private void populateFields() {
         if (mRowId != null) {
             Cursor note = mDbHelper.fetchNote(mRowId);
@@ -210,7 +203,22 @@ private void updateTime(int h, int m){
    
     public void startGoogleMaps(View view){
     	Intent i = new Intent(this, GoogleMapsActivity.class);
-    	startActivity(i);
+    	startActivityForResult(i, MAPSINTENT_ID);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+            Intent data) {
+    	System.out.println("onactivityresult");
+    	super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MAPSINTENT_ID) {
+            if (resultCode == RESULT_OK) {
+            	System.out.println("hmmmmmmmm ok");
+            }
+            else if(resultCode == RESULT_CANCELED){
+            	System.out.println("hmm canceled");
+            }
+        }
     }
 
 }

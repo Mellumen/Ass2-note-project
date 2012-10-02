@@ -16,10 +16,7 @@
 	<string name="remindInfo">I wish to be reminded of this note by</string>
 	<string name="time">Time </string>
 	<string name="date">Date </string>
-<<<<<<< HEAD
-	<string name="position">Position</string>
-		
-=======
+	<string name="position">Position</string>	
 	<string name="new_button">New </string>	
->>>>>>> 4b07c4a1bcdb9c8cc1d83888ec929a8d5ca8b2d3
+	<string name="cancel">Cancel</string>
 </resources>

@@ -10,6 +10,7 @@
 	<string name="title">Title</string>
 	<string name="body">Notat</string>
 	<string name="confirm">Ok</string> 
+	<string name="cancel">Avbryt</string>
 	<string name="edit_note">Endre Notat</string>
 	<string name="position">Position</string>
 	<string name="time">Tid </string>
