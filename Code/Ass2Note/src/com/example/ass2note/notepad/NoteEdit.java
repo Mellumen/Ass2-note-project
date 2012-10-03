@@ -44,7 +44,7 @@ public class NoteEdit extends Activity  {
 	private TextView mytimeview;
     private EditText mTitleText;
     private EditText mBodyText;
-  
+    private TextView mycordinates;				
   
     private Long mRowId;
     private NotesDbAdapter mDbHelper;
@@ -94,6 +94,7 @@ private void updateTime(int h, int m){
         mBodyText = (EditText) findViewById(R.id.body);
         mydateview = (TextView) findViewById(R.id.date);
         mytimeview = (TextView) findViewById(R.id.time);
+        mycordinates = (TextView) findViewById(R.id.time);
         
     	Button datebutton = (Button) findViewById(R.id.dateButton);
     	Button timebutton = (Button) findViewById(R.id.timeButton);
@@ -127,6 +128,7 @@ private void updateTime(int h, int m){
 			}
 		});
 	
+	
     confirmButton.setOnClickListener(new View.OnClickListener() {
 				// ON click CONFIRM
         public void onClick(View view) {
@@ -152,6 +154,7 @@ private void updateTime(int h, int m){
                     note.getColumnIndexOrThrow(NotesDbAdapter.KEY_DAY)));
             mytimeview.setText(note.getString(
                     note.getColumnIndexOrThrow(NotesDbAdapter.KEY_TIME)));
+           // 
         }
     }
 
@@ -179,14 +182,16 @@ private void updateTime(int h, int m){
         String body = mBodyText.getText().toString();
         String day = mydateview.getText().toString();
         String time = mytimeview.getText().toString();
+        String latitude = mycordinates.getText().toString(); 
+        String longitude = "Hei";
         
         if (mRowId == null) {
-            long id = mDbHelper.createNote(title, body,day, time);
+            long id = mDbHelper.createNote(title, body, day, time, latitude, longitude);
             if (id > 0) {
                 mRowId = id;
             }
         } else {
-            mDbHelper.updateNote(mRowId, title, body, day, time);
+            mDbHelper.updateNote(mRowId, title, body, day, time,latitude, longitude);
         }
     }
    

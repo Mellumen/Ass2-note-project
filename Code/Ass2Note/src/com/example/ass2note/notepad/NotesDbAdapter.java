@@ -40,6 +40,8 @@ public class NotesDbAdapter {
     public static final String KEY_BODY = "body";
     public static final String KEY_DAY = "day";
     public static final String KEY_TIME = "time";
+    public static final String KEY_LATI = "latitude";
+    public static final String KEY_LONG = "longitude";
    
     
     public static final String KEY_ROWID = "_id";
@@ -54,7 +56,7 @@ public class NotesDbAdapter {
     private static final String DATABASE_CREATE =
         "create table notes (_id integer primary key autoincrement, "
         + "title text not null, body text not null, day text not null," 
-        		+ " time text not null);" ;
+        		+ " time text not null, latitude text not null, longitude text not null);" ;
 
     private static final String DATABASE_NAME = "data";
     private static final String DATABASE_TABLE = "notes";
@@ -123,13 +125,14 @@ public class NotesDbAdapter {
      * @param body the body of the note
      * @return rowId or -1 if failed
      */		// Puts the intial values into the database
-    public long createNote(String title, String body, String day, String time) {
+    public long createNote(String title, String body, String day, String time, String latitude, String longitude) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, title);
         initialValues.put(KEY_BODY, body);
         initialValues.put(KEY_DAY,day);
         initialValues.put(KEY_TIME,time);
-        
+        initialValues.put(KEY_LATI,latitude);
+        initialValues.put(KEY_LONG,longitude);
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -152,7 +155,7 @@ public class NotesDbAdapter {
     public Cursor fetchAllNotes() {
 
         return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_BODY,KEY_DAY, KEY_TIME}, null, null, null, null, null);
+                KEY_BODY,KEY_DAY, KEY_TIME , KEY_LATI, KEY_LONG}, null, null, null, null, null);
     }
 
     /**
@@ -167,7 +170,7 @@ public class NotesDbAdapter {
         Cursor mCursor =
 
             mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                    KEY_TITLE, KEY_BODY, KEY_DAY, KEY_TIME }, KEY_ROWID + "=" + rowId, null,
+                    KEY_TITLE, KEY_BODY, KEY_DAY, KEY_TIME ,KEY_LATI , KEY_LONG }, KEY_ROWID + "=" + rowId, null,
                     null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -186,12 +189,16 @@ public class NotesDbAdapter {
      * @param body value to set note body to
      * @return true if the note was successfully updated, false otherwise
      */				// Updates the note with the values
-    public boolean updateNote(long rowId, String title, String body, String day, String time) {
+    public boolean updateNote(long rowId, String title, String body, String day, String time ,String longitude, String latitude) {
         ContentValues args = new ContentValues();
         args.put(KEY_TITLE, title);
         args.put(KEY_BODY, body);
         args.put(KEY_DAY, day);
         args.put(KEY_TIME, time);
+        args.put(KEY_LATI, latitude);
+        args.put(KEY_LONG,latitude );
         return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
+   
+    
 }
