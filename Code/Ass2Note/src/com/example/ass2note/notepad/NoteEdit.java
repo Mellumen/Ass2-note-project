@@ -26,6 +26,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -37,7 +38,7 @@ import com.example.ass2note.R;
 import com.example.ass2note.location.GoogleMapsActivity;
 
 public class NoteEdit extends Activity  {
-	static final int MAPSINTENT_ID = 0;
+	private static final int MAPSINTENT_ID = 1;
 	
 	private TextView mydateview;
 	private TextView mytimeview;
@@ -96,7 +97,6 @@ private void updateTime(int h, int m){
         
     	Button datebutton = (Button) findViewById(R.id.dateButton);
     	Button timebutton = (Button) findViewById(R.id.timeButton);
-    	Button positionbutton = (Button) findViewById(R.id.positionButton);
         Button confirmButton = (Button) findViewById(R.id.confirm);
        
         
@@ -127,12 +127,6 @@ private void updateTime(int h, int m){
 			}
 		});
 	
-	positionbutton.setOnClickListener(new View.OnClickListener() {
-		public void onClick(View v) {
-			startGoogleMapsActivity();
-		}
-	});
-	
     confirmButton.setOnClickListener(new View.OnClickListener() {
 				// ON click CONFIRM
         public void onClick(View view) {
@@ -143,11 +137,6 @@ private void updateTime(int h, int m){
     });
         
    
-    }
-    
-    public void startGoogleMapsActivity(){
-    	Intent il = new Intent(NoteEdit.this, GoogleMapsActivity.class);
-    	startActivity(il);
     }
     
     // Gets the values from the database
@@ -202,23 +191,27 @@ private void updateTime(int h, int m){
     }
    
     public void startGoogleMaps(View view){
-    	Intent i = new Intent(this, GoogleMapsActivity.class);
+    	Intent i = new Intent(NoteEdit.this, GoogleMapsActivity.class);
     	startActivityForResult(i, MAPSINTENT_ID);
     }
     
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-            Intent data) {
-    	System.out.println("onactivityresult");
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MAPSINTENT_ID) {
-            if (resultCode == RESULT_OK) {
-            	System.out.println("hmmmmmmmm ok");
-            }
-            else if(resultCode == RESULT_CANCELED){
-            	System.out.println("hmm canceled");
-            }
-        }
+    	
+    	Log.i("in onActivityResult", "Activity Result");
+    	if(requestCode==MAPSINTENT_ID)
+    	switch(resultCode){
+    	 	case Activity.RESULT_OK:{
+            	System.out.println("hmmmmmmmm ok"+data.getStringExtra("test"));
+    	 		break;
+    	 		}
+	 		case Activity.RESULT_CANCELED:{
+	 			break;
+	 		}
+    	}
+    	
     }
-
+    
+    
 }

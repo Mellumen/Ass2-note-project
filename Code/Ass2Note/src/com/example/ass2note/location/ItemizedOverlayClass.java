@@ -18,9 +18,9 @@ public class ItemizedOverlayClass extends ItemizedOverlay {
 	}
 
 	public ItemizedOverlayClass(Drawable defaultMarker, Context context) {
-		  super(boundCenterBottom(defaultMarker));
-		  mContext = context;
-		}
+		super(boundCenterBottom(defaultMarker));
+		mContext = context;
+	}
 	
 	@Override
 	protected OverlayItem createItem(int i) {
