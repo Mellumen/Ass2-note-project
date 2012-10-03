@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -15,7 +14,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.ass2note.R;
 import com.google.android.maps.GeoPoint;
@@ -26,7 +27,6 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 public class GoogleMapsActivity extends MapActivity implements LocationListener{
-	private static final int MAPSINTENT_ID = 1;
 	private double latitude=0, longitude=0;
 	private LocationManager mLocationManager;
 	private MapController mapController;
@@ -41,7 +41,7 @@ public class GoogleMapsActivity extends MapActivity implements LocationListener{
         
         // Fetch the mapView used to display the map, and enable zooming
         final MapView mapView = (MapView) findViewById(R.id.mapView);
-        mapView.setBuiltInZoomControls(true);
+   //     mapView.setBuiltInZoomControls(true);
         
         // Create the controller and zoom in the desired height
         mapController = mapView.getController(); //<4>
@@ -68,12 +68,12 @@ public class GoogleMapsActivity extends MapActivity implements LocationListener{
         }
         
         
-    /*    mapView.setOnTouchListener(new View.OnTouchListener() {
+        mapView.setOnTouchListener(new View.OnTouchListener() {
 
         	public boolean onTouch(View v, MotionEvent event) {
                 // TODO Auto-generated method stub
                 GeoPoint p = null;
-System.out.println("hmm");
+                
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                 	System.out.println("action up");
                     p = mapView.getProjection().fromPixels((int) event.getX(),
@@ -82,18 +82,19 @@ System.out.println("hmm");
                             + p.getLongitudeE6() / 1E6 + "Action is : "
                             + event.getAction());
                     return true;*/
-    /*               Toast.makeText(
+                   Toast.makeText(
                             getBaseContext(),
                             p.getLatitudeE6() / 1E6 + "," + p.getLongitudeE6()
                                     / 1E6 + "Action is : " + event.getAction(),
                             Toast.LENGTH_SHORT).show();
                 return true;
                 }else if(event.getAction() == MotionEvent.ACTION_MOVE){
-                	return true;
+                	System.out.println("moved");
+                	return false;
                 }
                 return false;
             }
-        });*/
+        });
        }
     
     
@@ -124,7 +125,8 @@ System.out.println("hmm");
 	
 	public void confirmMaps(View view){
 		Intent i = new Intent();
-		i.putExtra("test", "Confirmed");
+		i.putExtra("latitude", String.valueOf(latitude));
+		i.putExtra("longitude", String.valueOf(longitude));
 		setResult(Activity.RESULT_OK, i);
 		finish();
 	}
@@ -137,12 +139,12 @@ System.out.println("hmm");
 	@Override
 	 protected void onResume() {
 		    super.onResume();
-		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, this); //<7>
+		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, this); 
 		  }
 	 @Override
 	  protected void onPause() {
 	    super.onPause();
-	    mLocationManager.removeUpdates(this); //<8>
+	    mLocationManager.removeUpdates(this); 
 	  }
 
 	 @Override

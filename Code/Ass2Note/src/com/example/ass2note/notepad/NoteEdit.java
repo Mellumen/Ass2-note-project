@@ -200,15 +200,21 @@ private void updateTime(int h, int m){
     	startActivityForResult(i, MAPSINTENT_ID);
     }
     
+    /**
+     * Function. Automatically receives information from GoogleMapsActivity.
+     * Both latitude and longitude from the preferred position from the user
+     * is available here.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
     
-    	Log.i("in onActivityResult", "Activity Result");
+    	Log.i("onActivityResult", "Result fetched");
     	if(requestCode==MAPSINTENT_ID)
     	switch(resultCode){
     	 	case Activity.RESULT_OK:{
-            	System.out.println("hmmmmmmmm ok"+data.getStringExtra("test"));
+            	System.out.println("latitude is: "+data.getStringExtra("latitude"));
+            	System.out.println("longitude is: "+data.getStringExtra("longitude"));
     	 		break;
     	 		}
 	 		case Activity.RESULT_CANCELED:{
