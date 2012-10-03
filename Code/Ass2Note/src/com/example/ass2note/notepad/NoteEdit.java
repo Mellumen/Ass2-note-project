@@ -198,7 +198,7 @@ private void updateTime(int h, int m){
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
-    	
+    
     	Log.i("in onActivityResult", "Activity Result");
     	if(requestCode==MAPSINTENT_ID)
     	switch(resultCode){
