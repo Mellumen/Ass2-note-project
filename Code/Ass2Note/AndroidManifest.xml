@@ -30,7 +30,11 @@
         	android:theme="@android:style/Theme.Dialog"
             android:name=".location.GoogleMapsActivity">
         </activity>
-        <activity android:name=".location.UseGps"></activity>
+        <activity android:name=".location.UseGps"><intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

@@ -186,12 +186,12 @@ private void updateTime(int h, int m){
         String longitude = "Hei";
         
         if (mRowId == null) {
-            long id = mDbHelper.createNote(title, body, day, time, latitude, longitude);
+            long id = mDbHelper.createNote(title, body, day, time, longitude, latitude);
             if (id > 0) {
                 mRowId = id;
             }
         } else {
-            mDbHelper.updateNote(mRowId, title, body, day, time,latitude, longitude);
+            mDbHelper.updateNote(mRowId, title, body, day, time, longitude, latitude);
         }
     }
    
@@ -223,6 +223,8 @@ private void updateTime(int h, int m){
     	}
     	
     }
+    
+    
     
     
 }

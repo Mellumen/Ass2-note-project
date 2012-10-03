@@ -17,10 +17,13 @@
 package com.example.ass2note.notepad;
 
 
+import java.security.acl.LastOwnerException;
+
 import com.example.ass2note.R;
 import com.example.ass2note.R.id;
 import com.example.ass2note.R.layout;
 import com.example.ass2note.R.string;
+import com.example.ass2note.location.UseGps;
 
 
 import android.app.ListActivity;
@@ -35,17 +38,22 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class Notepad extends ListActivity {
     private static final int ACTIVITY_CREATE=0;
     private static final int ACTIVITY_EDIT=1;
-
+    private static final int ACTIVITY_GPS=2;
     private static final int INSERT_ID = Menu.FIRST;
+    private static final int INSERT_GPS = Menu.CATEGORY_SECONDARY;
     private static final int DELETE_ID = Menu.FIRST + 1;
 
     private NotesDbAdapter mDbHelper;
 
+    double lati = 0;
+    double longi = 0;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +64,8 @@ public class Notepad extends ListActivity {
         fillData();
         registerForContextMenu(getListView());
         onButtonClick();
-        
+       
+       
       
     }
 
@@ -80,6 +89,7 @@ public class Notepad extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         menu.add(0, INSERT_ID, 0, R.string.menu_insert);
+        menu.add(0, INSERT_GPS, 0, R.string.menu_gps);
         return true;
     }
 
@@ -88,6 +98,10 @@ public class Notepad extends ListActivity {
         switch(item.getItemId()) {
             case INSERT_ID:
                 createNote();
+                
+            case INSERT_GPS:
+            	 findGps();
+            	 
                 return true;
         }
 
@@ -129,7 +143,17 @@ public class Notepad extends ListActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        fillData();
+       
+        
+        
+        if (resultCode == RESULT_OK && requestCode == ACTIVITY_GPS) {
+            if (intent.hasExtra("longitud")) {
+            longi = intent.getExtras().getDouble("longitude");}
+            if (intent.hasExtra("latitude")) {
+                lati = intent.getExtras().getDouble("latitude");}
+   
+            } else
+            	  	fillData();
     }
     
     protected void onButtonClick(){
@@ -139,6 +163,16 @@ public class Notepad extends ListActivity {
     			createNote();
     		}
     	});
-    	
     }
+    protected void findGps(){
+    	 Intent i = new Intent(this, UseGps.class);
+    	 i.putExtra("Value1", lati);
+    	 i.putExtra("Value2", longi);
+    	 startActivityForResult(i, ACTIVITY_GPS);
+        
+    }
+
+
+
+
 }

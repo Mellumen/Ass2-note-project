@@ -16,4 +16,5 @@
 	<string name="time">Tid </string>
 	<string name="date">Dato </string>
 	<string name="new_button">Ny </string>	
+	 <string name="menu_gps">Finn Kordinater</string>
 </resources>
