@@ -48,7 +48,7 @@ public class Notepad extends ListActivity {
     private static final int INSERT_ID = Menu.FIRST;
     private static final int INSERT_GPS = Menu.CATEGORY_SECONDARY;
     private static final int DELETE_ID = Menu.FIRST + 1;
-
+    
     private NotesDbAdapter mDbHelper;
 
     double lati = 0;

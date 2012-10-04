@@ -44,8 +44,10 @@ public class NoteEdit extends Activity  {
 	private TextView mytimeview;
     private EditText mTitleText;
     private EditText mBodyText;
-    private TextView mycordinates;				
-  
+    				
+    private String lati;
+    private String longi;
+    
     private Long mRowId;
     private NotesDbAdapter mDbHelper;
     
@@ -94,7 +96,7 @@ private void updateTime(int h, int m){
         mBodyText = (EditText) findViewById(R.id.body);
         mydateview = (TextView) findViewById(R.id.date);
         mytimeview = (TextView) findViewById(R.id.time);
-        mycordinates = (TextView) findViewById(R.id.time);
+        
         
     	Button datebutton = (Button) findViewById(R.id.dateButton);
     	Button timebutton = (Button) findViewById(R.id.timeButton);
@@ -182,8 +184,8 @@ private void updateTime(int h, int m){
         String body = mBodyText.getText().toString();
         String day = mydateview.getText().toString();
         String time = mytimeview.getText().toString();
-        String latitude = mycordinates.getText().toString(); 
-        String longitude = "Hei";
+        String latitude = lati;
+        String longitude = longi;
         
         if (mRowId == null) {
             long id = mDbHelper.createNote(title, body, day, time, longitude, latitude);
@@ -214,7 +216,8 @@ private void updateTime(int h, int m){
      switch(resultCode){
        case Activity.RESULT_OK:{
              System.out.println("latitude is: "+data.getStringExtra("latitude"));
-             System.out.println("longitude is: "+data.getStringExtra("longitude"));
+             lati = data.getStringExtra("latitude");
+             longi = data.getStringExtra("longitude");
         break;
         }
     case Activity.RESULT_CANCELED:{
@@ -226,5 +229,6 @@ private void updateTime(int h, int m){
     
     
     
+   
     
 }
