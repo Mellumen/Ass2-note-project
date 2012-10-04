@@ -45,8 +45,8 @@ public class NoteEdit extends Activity  {
     private EditText mTitleText;
     private EditText mBodyText;
     				
-    private String lati;
-    private String longi;
+    private String lati = "lat";
+    private String longi = "long";
     
     private Long mRowId;
     private NotesDbAdapter mDbHelper;
@@ -81,7 +81,7 @@ private void updateLabel(int year, int monthOfYear, int dayOfMonth) {
 	mydateview.setText(dayOfMonth+"/"+monthOfYear+"/"+year); 
 }
 private void updateTime(int h, int m){
-	mytimeview.setText(h+"/"+m);
+	mytimeview.setText(h+":"+m);
 }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
