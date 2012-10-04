@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 import com.example.ass2note.R;
@@ -27,13 +28,14 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 public class GoogleMapsActivity extends MapActivity implements LocationListener{
-	private double latitude=0, longitude=0;
-	private LocationManager mLocationManager;
-	private MapController mapController;
-	private List<Overlay> mapOverlays;
-	private Drawable drawable;
-	private ItemizedOverlayClass itemizedoverlay;
-	
+ private double latitude=0, longitude=0;
+ private LocationManager mLocationManager;
+ private MapController mapController;
+ private List<Overlay> mapOverlays;
+ private Drawable drawable;
+ private ItemizedOverlayClass itemizedoverlay;
+ private GeoPoint point;
+ 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class GoogleMapsActivity extends MapActivity implements LocationListener{
         
         // Fetch the mapView used to display the map, and enable zooming
         final MapView mapView = (MapView) findViewById(R.id.mapView);
-   //     mapView.setBuiltInZoomControls(true);
+        mapView.setBuiltInZoomControls(true);
         
         // Create the controller and zoom in the desired height
         mapController = mapView.getController(); //<4>
@@ -54,6 +56,7 @@ public class GoogleMapsActivity extends MapActivity implements LocationListener{
         mapOverlays = mapView.getOverlays();
         drawable = this.getResources().getDrawable(R.drawable.pin);
         itemizedoverlay = new ItemizedOverlayClass(drawable, this);
+        itemizedoverlay.setActivity(this);
         
         // Get the user's last known location
         Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); 
@@ -62,48 +65,20 @@ public class GoogleMapsActivity extends MapActivity implements LocationListener{
           Log.d("Location found", location.toString());
           
           latitude = (int)(location.getLatitude() * 1000000);
-	      longitude = (int)(location.getLongitude() * 1000000);
-	      addOverlay();
-		  mLocationManager.removeUpdates(this); 
+       longitude = (int)(location.getLongitude() * 1000000);
+       addOverlay(latitude, longitude);
+       mapController.animateTo(point);
+    mLocationManager.removeUpdates(this); 
         }
-        
-        
-        mapView.setOnTouchListener(new View.OnTouchListener() {
-
-        	public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                GeoPoint p = null;
-                
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                	System.out.println("action up");
-                    p = mapView.getProjection().fromPixels((int) event.getX(),
-                            (int) event.getY());
-                   /* locationText.setText(p.getLatitudeE6() / 1E6 + ","
-                            + p.getLongitudeE6() / 1E6 + "Action is : "
-                            + event.getAction());
-                    return true;*/
-                   Toast.makeText(
-                            getBaseContext(),
-                            p.getLatitudeE6() / 1E6 + "," + p.getLongitudeE6()
-                                    / 1E6 + "Action is : " + event.getAction(),
-                            Toast.LENGTH_SHORT).show();
-                return true;
-                }else if(event.getAction() == MotionEvent.ACTION_MOVE){
-                	System.out.println("moved");
-                	return false;
-                }
-                return false;
-            }
-        });
+               
        }
     
     
-    public void addOverlay(){
-    	 GeoPoint point = new GeoPoint((int)latitude,(int)longitude);
-	     OverlayItem overlayitem = new OverlayItem(point, "You will be reminded at this position", "a position");
-	     itemizedoverlay.addOverlay(overlayitem);
-	     mapOverlays.add(itemizedoverlay);
-	     mapController.animateTo(point);
+    public void addOverlay(double lati, double longi){
+      point = new GeoPoint((int)lati, (int)longi);
+      OverlayItem overlayitem = new OverlayItem(point, "You will be reminded at this position", "a position");
+      itemizedoverlay.addOverlay(overlayitem);
+      mapOverlays.add(itemizedoverlay);
     }
    
     @Override
@@ -112,74 +87,75 @@ public class GoogleMapsActivity extends MapActivity implements LocationListener{
         return true;
     }
 
-	@Override
-	protected boolean isRouteDisplayed() {
-		return false;
-	}
-	
-	public void cancelMaps(View view){
-		Intent i = new Intent();
-		setResult(Activity.RESULT_CANCELED, i);
-		finish();
-	}
-	
-	public void confirmMaps(View view){
-		Intent i = new Intent();
-		i.putExtra("latitude", String.valueOf(latitude));
-		i.putExtra("longitude", String.valueOf(longitude));
-		setResult(Activity.RESULT_OK, i);
-		finish();
-	}
-	
-	public void onProviderDisabled(String provider) {}
-	public void onProviderEnabled(String provider) {}
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
-	public void onLocationChanged(Location location) {}
-	
-	@Override
-	 protected void onResume() {
-		    super.onResume();
-		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, this); 
-		  }
-	 @Override
-	  protected void onPause() {
-	    super.onPause();
-	    mLocationManager.removeUpdates(this); 
-	  }
+ @Override
+ protected boolean isRouteDisplayed() {
+  return false;
+ }
+ 
+ public void cancelMaps(View view){
+  Intent i = new Intent();
+  setResult(Activity.RESULT_CANCELED, i);
+  finish();
+ }
+ 
+ public void confirmMaps(View view){
+  Intent i = new Intent();
+  
+  i.putExtra("latitude", String.valueOf(itemizedoverlay.getLatitude()));
+  i.putExtra("longitude", String.valueOf(itemizedoverlay.getLongitude()));
+  setResult(Activity.RESULT_OK, i);
+  finish();
+ }
+ 
+ public void onProviderDisabled(String provider) {}
+ public void onProviderEnabled(String provider) {}
+ public void onStatusChanged(String provider, int status, Bundle extras) {}
+ public void onLocationChanged(Location location) {}
+ 
+ @Override
+  protected void onResume() {
+      super.onResume();
+      mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, this); 
+    }
+  @Override
+   protected void onPause() {
+     super.onPause();
+     mLocationManager.removeUpdates(this); 
+   }
 
-	 @Override
-	    protected void onStart() {
-	        super.onStart();
+  @Override
+     protected void onStart() {
+         super.onStart();
 
-	        // This verification should be done during onStart() because the system calls
-	        // this method when the user returns to the activity, which ensures the desired
-	        // location provider is enabled each time the activity resumes from the stopped state.
-	       /* LocationManager locationManager =
-	                (LocationManager) getSystemService(Context.LOCATION_SERVICE);*/
-	        final boolean gpsEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+         // This verification should be done during onStart() because the system calls
+         // this method when the user returns to the activity, which ensures the desired
+         // location provider is enabled each time the activity resumes from the stopped state.
+         final boolean gpsEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-	        if (!gpsEnabled) {
-	            // Build an alert dialog here that requests that the user enable
-	            // the location services, then when the user clicks the "OK" button,
-	            // call enableLocationSettings()
-	        	AlertDialog.Builder altDialog= new AlertDialog.Builder(this);
-	        	altDialog.setMessage("Please start your GPS"); // here add your message
-	        	altDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-	        	   
-	        	  // @Override
-	        	   public void onClick(DialogInterface dialog, int which) {
-	        	   // TODO Auto-generated method stub
-	        	   // Toast.makeText(getApplicationContext(), "Ok button Clicked ", Toast.LENGTH_LONG).show();
-	        		   enableLocationSettings();
-	        	   }
-	        	  });
-	        	altDialog.show();
+         if (!gpsEnabled) {
+             // Show an alert dialog that requests that the user enable
+             // the location services, then when the user clicks the "OK" button,
+             // enableLocationSettings() is called
+          AlertDialog.Builder altDialog= new AlertDialog.Builder(this);
+          altDialog.setMessage("Please start your GPS");
+          altDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+             
+            // @Override
+             public void onClick(DialogInterface dialog, int which) {
+              enableLocationSettings();
+             }
+            });
+          altDialog.show();
 
-	        }
-	    }
+         }
+     }
 
-	    private void enableLocationSettings() {
-	        Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	        startActivity(settingsIntent);
-	    }
+     private void enableLocationSettings() {
+         Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+         startActivity(settingsIntent);
+
+         // Exit Google Maps so it will be properly updated the next time.
+         finish();
+     }
+     
 }

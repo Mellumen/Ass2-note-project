@@ -196,9 +196,9 @@ private void updateTime(int h, int m){
     }
    
     public void startGoogleMaps(View view){
-    	Intent i = new Intent(NoteEdit.this, GoogleMapsActivity.class);
-    	startActivityForResult(i, MAPSINTENT_ID);
-    }
+        Intent i = new Intent(NoteEdit.this, GoogleMapsActivity.class);
+        startActivityForResult(i, MAPSINTENT_ID);
+       }
     
     /**
      * Function. Automatically receives information from GoogleMapsActivity.
@@ -207,21 +207,21 @@ private void updateTime(int h, int m){
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	super.onActivityResult(requestCode, resultCode, data);
+     super.onActivityResult(requestCode, resultCode, data);
     
-    	Log.i("onActivityResult", "Result fetched");
-    	if(requestCode==MAPSINTENT_ID)
-    	switch(resultCode){
-    	 	case Activity.RESULT_OK:{
-            	System.out.println("latitude is: "+data.getStringExtra("latitude"));
-            	System.out.println("longitude is: "+data.getStringExtra("longitude"));
-    	 		break;
-    	 		}
-	 		case Activity.RESULT_CANCELED:{
-	 			break;
-	 		}
-    	}
-    	
+     Log.i("onActivityResult", "Result fetched");
+     if(requestCode==MAPSINTENT_ID)
+     switch(resultCode){
+       case Activity.RESULT_OK:{
+             System.out.println("latitude is: "+data.getStringExtra("latitude"));
+             System.out.println("longitude is: "+data.getStringExtra("longitude"));
+        break;
+        }
+    case Activity.RESULT_CANCELED:{
+     break;
+    }
+     }
+     
     }
     
     
